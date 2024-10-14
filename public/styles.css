@@ -2,12 +2,11 @@ body {
 	margin: 0;
 }
 
-#container {
+#container, #app {
 	display: flex;
 	flex-direction: column;
 	max-width: 480px;
 	width: 100%;
-	background-color: pink;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -24,5 +23,5 @@ div[id^="section"] {
 #photo {
 	width: 100%;
 	max-width: 480px;
-	height: auto;
+	max-height: 240px
 }

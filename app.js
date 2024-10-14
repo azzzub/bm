@@ -30,7 +30,7 @@ app.get("/twitter/download", async (req, res) => {
 });
 
 app.get("/api/new_media", async (req, res) => {
-  const newMedia = await api.newMedia();
+  const newMedia = await api.newMedia(req, res);
   res.send(newMedia);
 });
 
