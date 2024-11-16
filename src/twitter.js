@@ -128,7 +128,7 @@ const bookmarked = async () => {
     });
 
     let insertRes;
-    let insertVal;
+    let insertVal = [];
     if (!sortIndexPrev) {
       insertVal = bookmarkedData;
     } else if (sortIndexPrev?.[0]?.entryId !== _bd?.[0]?.entryId) {
@@ -137,7 +137,7 @@ const bookmarked = async () => {
       );
     }
 
-    if (insertVal) {
+    if (insertVal.length !== 0) {
       insertRes = await collectionBD.insertOne({
         data: insertVal,
         time: new Date(),
@@ -299,6 +299,7 @@ const download = async () => {
           return {
             ...ee,
             newMedia,
+            time: new Date(),
           };
         })
       );
