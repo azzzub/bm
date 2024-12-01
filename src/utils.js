@@ -2,17 +2,22 @@ import axios from "axios";
 import fs from "node:fs";
 import path from "node:path";
 import url from "node:url";
+import https from "node:https";
 
 const convertCookiesToString = (cookies) => {
   return cookies.map((cookie) => `${cookie.name}=${cookie.value}`).join(";");
 };
 
 const downloadPhoto = async (url, filename) => {
-  const response = await axios.get(url, { responseType: "arraybuffer" });
+  const response = await axios.get(url, {
+    responseType: "arraybuffer",
+    timeout: 60000,
+    httpsAgent: new https.Agent({ keepAlive: true }),
+  });
 
   fs.writeFile(`downloaded/${filename}`, response.data, (err) => {
     if (err) throw err;
-    console.log("Image downloaded successfully!");
+    console.log(`${filename} success`);
   });
 };
 
@@ -28,6 +33,8 @@ async function downloadVideo(videoUrl, filename) {
 
   const response = await axios({
     url: videoUrl,
+    timeout: 120000,
+    httpsAgent: new https.Agent({ keepAlive: true }),
     method: "GET",
     responseType: "stream",
   });

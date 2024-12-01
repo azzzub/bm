@@ -12,7 +12,30 @@ const newMedia = async (req, res) => {
     .limit(content);
   const result = [];
   for await (const doc of collection) {
-    result.push(doc);
+    // Fix new IP!
+    const _newMedia = [];
+    doc?.newMedia?.forEach((e) => {
+      try {
+        return _newMedia.push({
+          ...e,
+          thumb:
+            e.type === "video"
+              ? process.env.URL + new URL(e.thumb).pathname.substring(1)
+              : null,
+          media: process.env.URL + new URL(e.media).pathname.substring(1),
+        });
+      } catch (error) {
+        return _newMedia.push({
+          ...e,
+          thumb: e.type === "video" ? process.env.URL + e.thumb : null,
+          media: process.env.URL + e.media,
+        });
+      }
+    });
+    result.push({
+      ...doc,
+      newMedia: _newMedia,
+    });
   }
 
   return result;
