@@ -244,12 +244,13 @@ const download = async () => {
 
                   newMedia.push({
                     type: eee.type,
-                    media: `${process.env.URL}downloaded/${filename}`,
+                    media: `downloaded/${filename}`,
                   });
                 } catch (error) {
+                  console.error(error);
                   newMedia.push({
                     type: eee.type,
-                    media: `${process.env.URL}error.png`,
+                    media: `error.png`,
                     error: error.message,
                   });
                 }
@@ -264,20 +265,24 @@ const download = async () => {
                   const mediaFilename = `${ee.entryId}-${i}`;
 
                   await utils.downloadVideo(eee.media, mediaFilename);
+                  console.log(
+                    `${mediaFilename}${utils.getFileExtension(
+                      eee.media
+                    )} success`
+                  );
                   newMedia.push({
                     type: eee.type,
-                    thumb: `${process.env.URL}downloaded/${thumbFilename}`,
-                    media: `${
-                      process.env.URL
-                    }downloaded/${mediaFilename}${utils.getFileExtension(
+                    thumb: `downloaded/${thumbFilename}`,
+                    media: `downloaded/${mediaFilename}${utils.getFileExtension(
                       eee.media
                     )}`,
                   });
                 } catch (error) {
+                  console.error(error);
                   newMedia.push({
                     type: eee.type,
-                    thumb: `${process.env.URL}error.png`,
-                    media: `${process.env.URL}error.png`,
+                    thumb: `error.png`,
+                    media: `error.png`,
                     error: error.message,
                   });
                 }
